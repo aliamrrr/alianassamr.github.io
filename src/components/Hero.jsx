@@ -165,7 +165,7 @@ export default function Hero() {
             Explore My Work →
           </Magnetic>
 
-          <Magnetic href={asset('/Ali_Anass_Amradouch_Resume.pdf')} target="_blank" style={{
+          <Magnetic href={asset('/AMRADOUCH_Ali_Anass_Reusme.pdf')} target="_blank" style={{
             display: 'inline-flex', alignItems: 'center', gap: 6,
             padding: '0.9rem 2.1rem', borderRadius: 50,
             fontFamily: 'var(--mono)', fontWeight: 700, fontSize: '0.9rem',
