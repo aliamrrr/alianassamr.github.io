@@ -1,14 +1,15 @@
 import { motion } from 'framer-motion';
+import { asset } from '../utils/asset';
 
 const logos = [
-  { src: '/sopra steria next logo.png', alt: 'Sopra Steria' },
-  { src: '/rbfa logo.png',              alt: 'RBFA' },
-  { src: '/alten logo.svg',             alt: 'Alten' },
-  { src: '/atos png.png',               alt: 'Atos' },
-  { src: '/sda logo png.png',           alt: 'SDA' },
-  { src: '/hackathons/huawei logo.png', alt: 'Huawei' },
-  { src: '/hackathons/aurbus logo.png', alt: 'Airbus' },
-  { src: '/hackathons/logo barca.png',  alt: 'FC Barcelona' },
+  { src: asset('/sopra steria next logo.png'), alt: 'Sopra Steria' },
+  { src: asset('/rbfa logo.png'),              alt: 'RBFA' },
+  { src: asset('/alten logo.svg'),             alt: 'Alten' },
+  { src: asset('/atos png.png'),               alt: 'Atos' },
+  { src: asset('/sda logo png.png'),           alt: 'SDA' },
+  { src: asset('/hackathons/huawei logo.png'), alt: 'Huawei' },
+  { src: asset('/hackathons/aurbus logo.png'), alt: 'Airbus' },
+  { src: asset('/hackathons/logo barca.png'),  alt: 'FC Barcelona' },
 ];
 
 export default function Marquee() {

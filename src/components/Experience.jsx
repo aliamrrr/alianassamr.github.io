@@ -1,10 +1,11 @@
 import { motion } from 'framer-motion';
 import Carousel from './Carousel';
+import { asset } from '../utils/asset';
 
 const exps = [
   {
     n: '01', role: 'AI Engineer', company: 'Sopra Steria Next',
-    period: 'Oct 2025 — Present · Nantes', logo: '/sopra steria next logo.png',
+    period: 'Oct 2025 — Present · Nantes', logo: asset('/sopra steria next logo.png'),
     color: '#6D28D9', bg: '#EDE9FE',
     bullets: [
       'Contributed to the framing of AI use cases across generative AI, speech-to-text, and observability.',
@@ -14,7 +15,7 @@ const exps = [
   },
   {
     n: '02', role: 'AI Research Intern', company: 'Royal Belgian FA',
-    period: 'Dec 2024 — Mar 2025 · Remote', logo: '/rbfa logo.png',
+    period: 'Dec 2024 — Mar 2025 · Remote', logo: asset('/rbfa logo.png'),
     color: '#1D4ED8', bg: '#EFF6FF',
     bullets: [
       'Translated tactical match analysis needs into AI solutions.',
@@ -24,7 +25,7 @@ const exps = [
   },
   {
     n: '03', role: 'AI Research Intern', company: 'ALTEN R&D Innovation Lab',
-    period: 'Apr – Sept 2024 · Rennes', logo: '/alten logo.svg',
+    period: 'Apr – Sept 2024 · Rennes', logo: asset('/alten logo.svg'),
     color: '#0F766E', bg: '#F0FDFA',
     bullets: [
       'Researched applied LLM techniques over tabular ESG & financial reports.',

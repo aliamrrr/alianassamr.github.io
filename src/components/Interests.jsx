@@ -1,4 +1,5 @@
 import { motion } from 'framer-motion';
+import { asset } from '../utils/asset';
 
 const stats = [
   { value: '12+', label: 'Years watching football' },
@@ -18,11 +19,11 @@ const topics = [
 ];
 
 const images = [
-  { src: '/interests/back_area_frame.jpg' },
-  { src: '/interests/IMG_0417 (1).jpg', pos: 'center 20%' },
-  { src: '/interests/IMG_5089.jpg' },
-  { src: '/interests/back_lines.jpg', pos: 'left center' },
-  { src: '/interests/taible.PNG' },
+  { src: asset('/interests/back_area_frame.jpg') },
+  { src: asset('/interests/IMG_0417 (1).jpg'), pos: 'center 20%' },
+  { src: asset('/interests/IMG_5089.jpg') },
+  { src: asset('/interests/back_lines.jpg'), pos: 'left center' },
+  { src: asset('/interests/taible.PNG') },
 ];
 
 export default function Interests() {

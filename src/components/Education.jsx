@@ -1,8 +1,9 @@
 import { motion } from 'framer-motion';
+import { asset } from '../utils/asset';
 
 const schools = [
   {
-    logo: '/school/imt atlantique logo.png',
+    logo: asset('/school/imt atlantique logo.png'),
     name: 'IMT Atlantique',
     degree: 'Engineering · Data Science',
     period: '2022–2025, Nantes',
@@ -13,7 +14,7 @@ const schools = [
     backColor: '#FDE047',
   },
   {
-    logo: '/school/carlos 3 madrid logo.png',
+    logo: asset('/school/carlos 3 madrid logo.png'),
     name: 'Carlos III Madrid',
     degree: 'Erasmus+ · AI & LLMs',
     period: 'Jan–Jun 2024, Madrid',
@@ -23,7 +24,7 @@ const schools = [
     backColor: '#FDE047',
   },
   {
-    logo: '/school/cpge maroc.png',
+    logo: asset('/school/cpge maroc.png'),
     name: 'MPSI / MP Prépa',
     degree: 'Mathematics & Physics',
     period: '2020–2022, Meknes',

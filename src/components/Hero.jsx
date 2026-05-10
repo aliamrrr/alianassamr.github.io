@@ -1,5 +1,6 @@
 import { motion } from 'framer-motion';
 import { useRef, useCallback } from 'react';
+import { asset } from '../utils/asset';
 import Typewriter from './Typewriter';
 import { HandWritingUnderline, HandWritingCircle } from './HandWritingText';
 
@@ -164,7 +165,7 @@ export default function Hero() {
             Explore My Work →
           </Magnetic>
 
-          <Magnetic href="/Ali_Anass_Amradouch_Resume.pdf" target="_blank" style={{
+          <Magnetic href={asset('/Ali_Anass_Amradouch_Resume.pdf')} target="_blank" style={{
             display: 'inline-flex', alignItems: 'center', gap: 6,
             padding: '0.9rem 2.1rem', borderRadius: 50,
             fontFamily: 'var(--mono)', fontWeight: 700, fontSize: '0.9rem',

@@ -1,21 +1,22 @@
 import { motion } from 'framer-motion';
 import { useRef, useCallback } from 'react';
+import { asset } from '../utils/asset';
 
 const awards = [
   {
-    n: '01', rank: '#2 / 3,000', logo: '/hackathons/logo barca.png',
+    n: '01', rank: '#2 / 3,000', logo: asset('/hackathons/logo barca.png'),
     title: 'Barça Innovation Hub',
     desc: '2nd out of 3,000 applicants at Talent Arena Barcelona — AI applied to football performance analytics.',
     rankBg: '#FDE047', rankColor: '#0A0A0A', border: '#0A0A0A',
   },
   {
-    n: '02', rank: 'WINNER', logo: '/hackathons/huawei logo.png',
+    n: '02', rank: 'WINNER', logo: asset('/hackathons/huawei logo.png'),
     title: 'Huawei Munich Tech Arena',
     desc: "Outstanding Award in the AI & Audio track at Huawei's international innovation competition.",
     rankBg: '#6D28D9', rankColor: '#fff', border: '#6D28D9',
   },
   {
-    n: '03', rank: 'WINNER', logo: '/hackathons/aurbus logo.png',
+    n: '03', rank: 'WINNER', logo: asset('/hackathons/aurbus logo.png'),
     title: 'Airbus Digital Challenge',
     desc: 'Winner with an NLP-based informal data analysis solution for aerospace use cases.',
     rankBg: '#0A0A0A', rankColor: '#FDE047', border: '#0A0A0A',

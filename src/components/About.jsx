@@ -1,5 +1,6 @@
 import { motion } from 'framer-motion';
 import { useRef, useCallback } from 'react';
+import { asset } from '../utils/asset';
 
 function useTilt(intensity = 12) {
   const ref = useRef(null);
@@ -56,7 +57,7 @@ export default function About() {
             style={{ position: 'relative', zIndex: 1, transformStyle: 'preserve-3d', willChange: 'transform' }}
           >
             <img
-              src="/ali anass.png" alt="Ali Anass"
+              src={asset('/ali anass.png')} alt="Ali Anass"
               style={{
                 width: '100%', borderRadius: 22,
                 aspectRatio: '4/5', objectFit: 'cover', objectPosition: 'top center',
