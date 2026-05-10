@@ -20,6 +20,9 @@ yarn-debug.log*
 yarn-error.log*
 pnpm-debug.log*
 
+# Claude Code internal settings
+.claude/
+
 # Editor
 .vscode/
 .idea/
