@@ -43,7 +43,7 @@ export default function Work({ chatOpen }) {
 
       <div className="meta-grid">
         <div className="cell c2">
-          <p className="label">Currently</p>
+          <p className="label label-now">Currently</p>
           <p className="value">
             AI Engineer @{' '}
             <a href="https://www.soprasteria.com" {...ext}>Sopra Steria Next</a>

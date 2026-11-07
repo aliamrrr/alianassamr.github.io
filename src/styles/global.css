@@ -576,3 +576,6 @@ a.company:hover { color: var(--primary); }
   .pill-ghost { visibility: hidden; pointer-events: none; }
 }
 .meta-grid .certified { order: 3; }
+
+/* "Currently" stands out: Moroccan green, same as the live dot */
+.meta-grid .label-now { color: var(--secondary); font-weight: 500; }
