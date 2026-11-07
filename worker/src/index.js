@@ -78,7 +78,7 @@ export default {
       upstream = await fetch('https://api.mistral.ai/v1/chat/completions', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json', Authorization: `Bearer ${env.MISTRAL_API_KEY}` },
-        body: JSON.stringify({ model: env.MODEL || DEFAULT_MODEL, messages: [{ role: 'system', content: SYSTEM_PROMPT }, ...messages], max_tokens: MAX_TOKENS, temperature: 0.4 }),
+        body: JSON.stringify({ model: env.MODEL || DEFAULT_MODEL, messages: [{ role: 'system', content: SYSTEM_PROMPT }, ...messages], max_tokens: MAX_TOKENS, temperature: 0.2 }),
         signal: AbortSignal.timeout(UPSTREAM_TIMEOUT_MS),
       });
     } catch {
@@ -89,9 +89,17 @@ export default {
     const data = await upstream.json().catch(() => null);
     const reply = data?.choices?.[0]?.message?.content;
     if (typeof reply !== 'string' || !reply.trim()) return json(502, { error: 'empty_reply' });
-    return json(200, { reply: reply.slice(0, 6_000) });
+    return json(200, { reply: tidy(reply).slice(0, 6_000) });
   },
 };
+
+// The site avoids em/en dashes; small models use them anyway, so fix it deterministically.
+function tidy(text) {
+  return text
+    .replace(/(\w)\s*–\s*(\w)/g, '$1 to $2') // ranges: "Apr–Sept" -> "Apr to Sept"
+    .replace(/\s*—\s*/g, ', ')                  // em dash -> comma
+    .replace(/ ,/g, ',');
+}
 
 function validateMessages(list) {
   if (!Array.isArray(list) || list.length === 0 || list.length > MAX_MESSAGES) return null;

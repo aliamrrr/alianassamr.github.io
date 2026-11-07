@@ -51,7 +51,6 @@ The RBFA is the national football federation of Belgium. Managed by Max Goldsmit
 - Translated complex tactical match analysis needs into concrete AI solutions
 - Built computer vision pipelines for player detection & phase-of-play segmentation using deep learning
 - Produced custom tactical visualizations for match preparation used by coaching staff
-- Operated in a fast-paced, high-stakes sports analytics environment
 
 ---
 
@@ -144,7 +143,7 @@ Based on direct manager feedback:
 - Highly motivated and deeply committed to quality
 - Integrates extremely fast into new teams and environments
 - Excellent organizational and project management skills
-- Exceptional problem-solver — thrives under pressure in fast-paced environments
+- Strong problem-solver, comfortable working under pressure
 - Dedicated researcher — constantly exploring new ideas beyond the scope asked
 - Goes the extra mile consistently
 - Great communicator in 4 languages
