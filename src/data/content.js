@@ -382,6 +382,6 @@ export const aboutPhotos = [
   { label: 'Stadiums', photos: [
     { src: asset('/media/stadium-metropolitano.jpg'), ratio: 3 / 4, cursor: 'First time watching Barça (Metropolitano, Madrid)', alt: 'Ali at the Metropolitano stadium' },
     { src: asset('/media/stadium-parc-des-princes.jpg'), ratio: 3 / 4, cursor: 'First UCL match (Parc des Princes, Paris)', alt: 'Ali at the Parc des Princes' },
-    { src: asset('/media/stadium-allianz-arena.jpg'), ratio: 3021 / 3427, cursor: 'More stadiums soon... (Allianz Arena, Munich)', alt: 'Ali at the Allianz Arena' },
+    { src: asset('/media/stadium-allianz-arena.jpg'), ratio: 3021 / 3427, cursor: 'More stadiums... (Allianz Arena, Munich)', alt: 'Ali at the Allianz Arena' },
   ] },
 ];
