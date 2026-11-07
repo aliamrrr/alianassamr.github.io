@@ -22,17 +22,22 @@ Sopra Steria Next is a leading European tech consulting firm. Ali works as an AI
 - Contributed to the framing of AI use cases across generative AI, speech-to-text, and observability
 - Developed AI solutions and components within enterprise environments
 - Supported the industrialization of AI use cases, from POC to production-ready solutions
+- Currently focused on AI evals & monitoring: measuring, monitoring and improving the quality of LLM and agent systems in production
 
 ---
 
 ## Professional Experience (Chronological)
 
-### AI Research Intern — ALTEN R&D Innovation Lab (Apr – Sept 2024, Rennes)
+### AI Research Intern — ALTEN R&D Innovation Lab (Apr – Sept 2025, Rennes)
 ALTEN is a major European engineering & technology consultancy with a dedicated R&D lab. Supervised by Pierpaolo Goffredo (PhD in NLP, LLM expert) and Saad Abidi (AI Engineer at Atos).
-- Researched applied LLM techniques over tabular ESG & financial reports
-- Benchmarked context formats, prompting strategies & RAG architectures for enterprise use
-- Built a Text2SQL natural language querying demonstrator for structured data
-- Developed strong foundations in production LLM architecture and evaluation
+End-of-studies internship on the Cobot-Greenwashing project: a conversational agent that answers questions about companies' CSR (sustainability) reports with sources. Ali owned the table tool, since key CSR figures live in tables where LLMs perform worse than on text.
+- Compared three methods: LLM-Table (whole table in the prompt, baseline), Multi-Experts (a few-shot classifier routes questions to 5 categories with specialised prompts, 90% routing accuracy on 250 questions) and Chain-of-Tables (the LLM selects relevant rows, then columns, and answers from the sub-table; inspired by Google's Chain-of-Table)
+- Built an evaluation on 1,000 QA pairs from FeTaQA, TAT-QA, TableBench and WikiTables, across Gemma 2B, Gemma 3n, Mistral 7B and GPT-4o-mini. Showed BERTScore could not separate methods (0.827–0.878) and added LLM-as-a-Judge scoring of factual correctness (20.7–74.1)
+- Chain-of-Tables won on every model: Gemma 2B went from 20.7 to 65.1; Mistral 7B came within 2.6 points of GPT-4o-mini (71.5 vs 74.1)
+- Found merged cells (−5.1 pts) and hierarchical indexes (−12 pts) hurt accuracy; injecting table metadata into the prompt raised GPT-4o-mini + Chain-of-Tables to 80.4 (+6.2), numerical reasoning to 86.55 (+10.85)
+- Set up a 3,000-table labelling campaign: 120 Label Studio projects of 25 tables, Azure Blob Storage, Label Studio Python API, custom annotation interface, annotation guide and tracking pipelines
+- Shipped a demonstrator: chat over any table with GPT-4o-mini / Mistral / Gemma, analytics dashboard (sessions, latency, cost) on a SQL database, like/dislike feedback. Tested on ALTEN and Carrefour reports: 96% satisfaction, 100% of misleading questions caught
+- Explored Text-to-SQL for larger tables, with a taxonomy of LLM SQL errors
 
 ### Software Engineer / Data Analyst — French Health Insurance (Sept – Dec 2024, Remote)
 A mission-critical government project with high visibility:
@@ -144,6 +149,22 @@ Based on direct manager feedback:
 - Goes the extra mile consistently
 - Great communicator in 4 languages
 - First-principles thinker trained by rigorous French academic system
+
+---
+
+## Recent Activity & Side Projects (2026, from Ali's LinkedIn)
+
+- **Focus**: GenAI & agentic systems at Sopra Steria Next, in the AI x SmartOps team (Practice AI & Smart Operations).
+- **Certifications**: Claude Certified Developer (Anthropic), Claude Certified Associate (Anthropic), and AWS Certified AI Practitioner — all passed in the same week, supported by Sopra Steria Next.
+- **CodmAI — 2nd out of 3,000 applicants at the Barça Innovation Hub hackathon (#MoreThanAHack)**, organised by FC Barcelona's Barça Innovation Hub and Metrica Sports, final presented at Talent Arena in Barcelona. CodmAI is a multi-agent platform that turns football data into instant tactical insights: ask anything in natural language and get automated analysis with charts, reports and video clips. Team: Abderrahim Abdellaoui, Brahim Anfoud, Adam Rochdi, Bilal Aidi.
+- **Taible — Mistral AI Worldwide Hackathon** (1,000+ engineers across 7 cities): a tactical drill builder where coaches describe a setup in natural language and get an animated pitch with a narrated voiceover (voice by ElevenLabs), tactical overlays, and video export.
+- **Next Radio — Paris AI Hackathon**, built with Adnane El Yazid: a radio channel fully run by AI agents (media generation, web search, scripts, audio).
+- **OpenBootroom** (published via Ali Decodes): open-source AI skills for football, installable in Claude Code, Codex, GitHub Copilot or Cursor. Day 1: skills for SkillCorner data analysis and football intelligence (analysts, coaches, recruitment, performance and data teams). Day 2: youth football coaching — training-session reports (HTML/PDF) from notes, player observation reports from text or images, training-video review, development progressions. The skills ask one question at a time and adapt to the coach's context and methodology. Episode #1 analysed Sydney FC 4–1 Adelaide United with SkillCorner data: data audit, Q&A, confirmed brief, passing networks and shot maps for both teams, a PDF report uploaded to Google Drive, and a reusable pipeline.
+- **World Cup 2026 sentiment analysis**: measured French public sentiment about Les Bleus players across the tournament (e.g. Mbappé's sentiment with Real Madrid vs with the national team; impact on the pitch vs public sentiment). Praised publicly by Bruno Maillot, Managing Director of the Practice AI & Smart Operations at Sopra Steria Next.
+- **CatchBall — RL × robotics** (Ali's first reinforcement learning × robotics side project): a simulated humanoid robot learning to catch a ball. 4,096 robots train in parallel through five levels (drop, lob, medium, fast, expert) with asymmetric actor-critic PPO (the actor sees noisy, delayed ball positions; the critic sees exact physics during training). Rewards: +50 catch, +2 per step held, +100 per second held, −10 ball on the ground, −30 fall. The first policies exploited the reward (reward hacking) until it was tightened. For vision, a single pixels-to-actions network reached only 1%, so Ali separated seeing from acting: a CNN ball detector trained on ~38M simulator images with free labels finds 99.2% of visible balls with 2.0 cm 3D error and feeds the frozen teacher policy; then a camera-only student learns from the teacher's corrections. Weighted catch rate: teacher 64.9%, camera + detector chain 63.6%, camera-only student v3 53.2% (v2: 0.6%).
+- **Devoxx Morocco 2026**: attended the conference in Morocco.
+- **Interests in AI research Ali has written about**: evolving the agent harness instead of fine-tuning the model (Joel Niklaus' "Don't Train the Model, Evolve the Harness" — agent performance depends heavily on the system around the model: tool-call repair, loop detection, output verification); conditional memory for LLMs (Engram, beyond Mixture-of-Experts); how Claude's perceived character varies across languages, and what that could mean for physical AI.
+- **Background**: Ali is Moroccan and a proud supporter of the Moroccan national team; he cares about the Moroccan AI ecosystem.
 
 ---
 

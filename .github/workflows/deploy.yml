@@ -13,6 +13,9 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v4
+        with:
+          # don't leave the write token in .git/config while npm install scripts run
+          persist-credentials: false
 
       - name: Setup Node
         uses: actions/setup-node@v4
@@ -26,7 +29,9 @@ jobs:
       - name: Build
         run: npm run build
         env:
-          VITE_MISTRAL_API_KEY: ${{ secrets.VITE_MISTRAL_API_KEY }}
+          # Public URL of the AliLLM proxy (worker/). Never pass an API key to the site build:
+          # every VITE_* variable is compiled into the public JS bundle.
+          VITE_CHAT_ENDPOINT: ${{ vars.CHAT_ENDPOINT }}
 
       - name: Deploy to GitHub Pages
         uses: peaceiris/actions-gh-pages@v4
