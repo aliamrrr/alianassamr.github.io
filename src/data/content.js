@@ -390,8 +390,6 @@ export const funItems = [
     categories: ['hackathon'], src: asset('/media/huawei-tech-arena.jpg'), ratio: 788 / 528 },
   { title: 'Airbus Digital Challenge', description: 'NLP for informal aerospace data', tag: 'Winner @ Airbus Digital Challenge',
     categories: ['hackathon'], src: asset('/hackathons/aurbus logo.png'), ratio: 4 / 3, fit: 'contain' },
-  { title: 'Ali Decodes', description: 'Football, decoded with AI', tag: 'LinkedIn page',
-    categories: ['football'], src: asset('/media/ali-decodes-post.jpg'), ratio: 617 / 510, href: LINKS.aliDecodes, cursor: 'linkedin', ctx: 'ball' },
 ];
 
 /* ── About ────────────────────────────────────────────────── */
