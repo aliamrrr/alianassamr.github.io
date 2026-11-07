@@ -21,6 +21,7 @@ export default function Project({ slug }) {
     );
   }
 
+  const gallery = (p.gallery || []).filter((g) => g.src); // never show empty slots
   const readable = projects.filter((x) => x.clickable);
   const next = readable[(readable.indexOf(p) + 1) % readable.length];
 
@@ -95,9 +96,9 @@ export default function Project({ slug }) {
         )}
       </div>
 
-      {p.gallery?.length > 0 && (
-        <div className={`gallery ${p.gallery.length > 1 ? 'two' : 'one'}`}>
-          {p.gallery.map((g, i) => (
+      {gallery.length > 0 && (
+        <div className={`gallery ${gallery.length > 1 ? 'two' : 'one'}`}>
+          {gallery.map((g, i) => (
             <figure key={i}>
               <AssetSlot src={g.src} type={g.type} ratio={g.ratio} hint={g.hint} alt={g.caption} poster={g.poster} controls={!!g.controls} />
               {g.caption && <figcaption className="figcap">{g.caption}</figcaption>}

@@ -60,7 +60,6 @@ export const projects = [
     ],
     gallery: [
       { src: asset('/media/rbfa-defensive-lines.jpg'), ratio: '1300 / 800', caption: 'Defensive lines reconstructed from detections.' },
-      { src: null, ratio: '16 / 9', hint: 'Screen recording of the detection / segmentation pipeline running on footage', caption: 'Pipeline in motion.' },
     ],
     quote: { text: 'He has undoubtedly redefined our standards of excellence for interns at the RBFA.', by: 'Max Goldsmith, Analytics at Just Eat Takeaway, former RBFA' },
   },
@@ -131,7 +130,6 @@ export const projects = [
     ],
     gallery: [
       { src: asset('/media/ali-decodes-post.jpg'), ratio: '617 / 510', caption: 'Episode 1 as published on Ali Decodes: passing networks for Sydney FC and Adelaide United.' },
-      { src: null, ratio: '617 / 510', hint: 'Shot map from Episode 1', caption: 'Shot map.' },
     ],
     link: { href: LINKS.openBootroom, label: 'Install OpenBootroom' },
   },
@@ -144,8 +142,8 @@ export const projects = [
     timeline: 'Sept to Dec 2024',
     team: ['Team of 4 engineers'],
     skills: ['Full-stack', 'Data Engineering', 'Business Intelligence'],
-    media: { src: null, ratio: '16 / 10', hint: 'Screenshot of the fraud-detection dashboard (blur sensitive data)' },
-    clickable: true,
+    media: { src: null, ratio: '16 / 10' },
+    clickable: false, // no visuals yet: kept out of Work and of the Next-project loop
     summary:
       'I led a team of four engineers building a full-stack tool that helps analysts spot healthcare fraud.',
     sections: [
@@ -233,10 +231,7 @@ export const projects = [
         'Next steps I documented: Text-to-SQL for larger tables (with a taxonomy of LLM SQL errors to evaluate it), and multimodal models that turn charts into tables so the same pipeline can read them.',
       ] },
     ],
-    gallery: [
-      { src: null, ratio: '16 / 10', hint: 'Demonstrator, chat tab (Figure 2.3.2 of the report)', caption: 'The demonstrator: ask a table anything, switch models.' },
-      { src: null, ratio: '16 / 10', hint: 'Demonstrator, analytics tab (Figure 2.3.3 of the report)', caption: 'Analytics: sessions, latency, cost and feedback.' },
-    ],
+    gallery: [],
     quote: { text: 'Ali contributed valuable insights and delivered his work with great attention to detail, always showing motivation to go the extra mile.', by: 'Pierpaolo Goffredo, PhD, NLP & LLMs at ALTEN' },
   },
   {
@@ -262,7 +257,7 @@ export const projects = [
         'Save drills to a personal library of zone-training sessions.',
       ] },
     ],
-    gallery: [{ src: null, ratio: '16 / 9', hint: 'Demo video of Taible (prompt → animated drill → voiceover)', caption: 'Demo.' }],
+    gallery: [],
   },
   {
     // case study reachable from Fun

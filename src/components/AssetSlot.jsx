@@ -38,10 +38,13 @@ export default function AssetSlot({ src, type, ratio = '16 / 9', hint, alt = '',
           {veil && <ZelligeVeil loaded={loaded} onDone={() => setVeil(false)} />}
         </>
       ) : (
-        <div className="asset-empty">
-          <span className="tag">[INSERT ASSET HERE]</span>
-          {hint && <span className="hint">{hint}</span>}
-        </div>
+        // dev shows what to drop in; production never shows placeholder text
+        import.meta.env.DEV ? (
+          <div className="asset-empty">
+            <span className="tag">[INSERT ASSET HERE]</span>
+            {hint && <span className="hint">{hint}</span>}
+          </div>
+        ) : null
       )}
     </div>
   );
