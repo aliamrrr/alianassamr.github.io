@@ -1,7 +1,9 @@
 # AliLLM proxy
 
 The chat used to call Mistral from the browser with the API key compiled into the public JS bundle.
-This Worker keeps the key server-side and enforces origin, size, model, token and per-IP rate limits.
+This Worker keeps the key server-side and enforces the allowed origin, request size, model and token budget, plus exact rate limits counted in a Durable Object: 8 questions per minute per IP and 300 per day for the whole site.
+
+Deployed at https://alillm-proxy.aliamr3210.workers.dev/chat. The model is set by `MODEL` in wrangler.toml: `ministral-8b-latest` works on the free Mistral plan (2 requests/min); after enabling a paid plan, switch to `mistral-small-latest` and redeploy.
 
 ## Set up (once)
 

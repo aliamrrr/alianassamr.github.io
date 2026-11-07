@@ -35,3 +35,9 @@ pnpm-debug.log*
 # OS
 .DS_Store
 Thumbs.db
+
+# Cloudflare Wrangler local state
+worker/.wrangler/
+
+# raw source videos (the encoded copy lives in public/media)
+/CatchBall_film_EN*.mp4

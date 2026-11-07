@@ -268,12 +268,12 @@ export const projects = [
     role: 'Solo side project',
     timeline: '2026',
     team: [],
-    skills: ['Physical AI', 'Reinforcement learning (PPO)', 'Simulation', 'Computer vision'],
+    skills: ['Physical AI', 'Reinforcement learning (PPO)', 'World models (TD-MPC2)', 'Computer vision'],
     media: { src: asset('/media/catchball-film.mp4'), type: 'video', ratio: '16 / 9', poster: asset('/media/catchball-poster.jpg'), controls: true },
     cardMedia: { src: asset('/media/catchball-loop.mp4'), type: 'video', ratio: '16 / 9', poster: asset('/media/catchball-poster.jpg') },
     clickable: true,
     summary:
-      'My first reinforcement learning × robotics side project: a simulated humanoid learning to catch a ball, first with perfect knowledge of the ball, then with nothing but its own camera. The film above (in French) covers the whole thing.',
+      'My first reinforcement learning × robotics side project: a simulated humanoid learning to catch a ball, first with perfect knowledge of the ball, then with nothing but its own camera, and finally with a world model to plan. The film above covers the whole thing.',
     sections: [
       { title: 'Learning to catch', bullets: [
         '4,096 robots train at the same time in simulation, through five levels: drop, lob, medium, fast and expert.',
@@ -286,8 +286,14 @@ export const projects = [
         'So I separated seeing from acting: a CNN ball detector, trained on ~38M simulator images with free labels (no manual annotation), finds 99.2% of visible balls with a 2.0 cm 3D error, and feeds the frozen teacher policy.',
         'Then the student drives and the teacher corrects: the camera-only student learns from the teacher’s corrections.',
       ] },
-      { title: 'Results', body: ['Weighted catch rate: teacher 64.9%, camera + detector chain 63.6%, camera-only student v3 53.2% (up from 0.6% for v2).'] },
-      { title: 'Next: world models', body: ['The policy reacts to what it sees. The next step is a world model: learning how the ball and the body evolve, so the robot can predict where the ball will be and plan its catch instead of only reacting.'] },
+      { title: 'Results', body: ['Weighted catch rate: teacher 64.9%, camera + detector chain 64.3%, camera-only student v3 59.1% (up from 1.0% for v2). The robot falls less than 1% of the time; the expert level tops out around 20%, with or without vision.'] },
+      { title: 'Then a world model to plan', bullets: [
+        'TD-MPC2: the robot learns its own simulator. From noisy ball readings and its own body state, it predicts the next latent state and what each future is worth. No images, only vectors.',
+        'Dream-MPC plans inside that model at every step: the policy proposes a few action sequences, the world model rolls each one out, the gradient pushes them toward more value, the robot plays the first action and starts over.',
+        'The policy learned in the model reaches 58.9% after about 200M steps, for $3.38 of GPU, close to the PPO teacher (64.9%).',
+        'Planning on top does not help. With small corrections (at most ±0.01 to ±0.05 per action) the catch rate stays between 58% and 60%; with unbounded planning it drops to 27.5%. The planner exploits the model\'s errors: a shortcut that only exists on the map.',
+      ] },
+      { title: 'What I learned', bullets: ['The reward is the law.', 'Split seeing from acting.', 'Don\'t trust your model too much.'] },
     ],
     gallery: [],
   },
