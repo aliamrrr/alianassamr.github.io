@@ -171,64 +171,29 @@ export const projects = [
     clickable: true,
     cardLive: 'tables',
     live: 'tables',
-    liveCaption: 'The table tool on a real table from ALTEN’s 2023 CSR report: keep the relevant row, then the relevant columns, answer from the sub-table, and check it with the benchmark. The scores are the real LLM-as-a-Judge means from the study.',
+    liveCaption: 'The table tool on a table from ALTEN’s public 2023 CSR report: keep the relevant row, then the relevant columns, answer from the sub-table, then check the answer with an LLM judge.',
     summary:
-      'Cobot-Greenwashing is an R&D project at ALTEN Labs Rennes: a conversational agent that answers questions about companies’ CSR reports quickly, precisely and with sources. A report runs to around 150 pages, and the key figures (emissions, energy, workforce) sit in tables, where LLMs answer noticeably worse than on text. I worked on the table tool: find how to process tables, which model to use and how to answer, measure it, and ship a demo.',
+      'Cobot-Greenwashing is an R&D project at ALTEN Labs Rennes: a conversational agent that answers questions about companies’ CSR reports quickly, precisely and with sources. A report runs to around 150 pages, and the key figures (emissions, energy, workforce) sit in tables, where LLMs answer noticeably worse than on text. I worked on the table tool: how to process tables, which model to use and how to answer, how to measure it, and a demo.',
     sections: [
-      { title: 'The constraints', bullets: [
-        'Tables arrive already parsed, as CSV or HTML (another team owned PDF parsing).',
-        'CSR tables are small, typically 5 to 50 rows.',
-        'An answer has to come back in under 2 seconds.',
-      ] },
-      { title: 'Three methods', blocks: [{ type: 'methods', items: [
-        { name: 'LLM-Table', note: 'baseline', text: 'The whole table and the question go into one context prompt, with an instruction to answer strictly from the table.' },
-        { name: 'Multi-Experts', note: 'router', text: 'A few-shot classifier sends each question to one of five categories (lookup, summarization, fact verification, data analysis, numerical reasoning), each with its own prompt. It routed 90% of 250 labelled questions correctly.' },
-        { name: 'Chain-of-Tables', note: 'winner', text: 'Inspired by Google’s Chain-of-Table: the LLM first selects the relevant rows, then the relevant columns, and answers from that much smaller sub-table.' },
+      { title: 'The approach', body: [
+        'I compared a few ways of handing a table to an LLM, from the simplest (the whole table in the prompt) to narrowing it down first, so the model answers from a much smaller sub-table.',
+      ], blocks: [{ type: 'methods', items: [
+        { name: 'LLM-Table', note: 'baseline', text: 'The whole table and the question go into one prompt, with an instruction to answer strictly from the table.' },
+        { name: 'Multi-Experts', note: 'router', text: 'Each question is first classified by type (lookup, summary, fact check, analysis, numerical reasoning) and sent to a prompt written for that type.' },
+        { name: 'Chain-of-Tables', note: 'narrow first', text: 'Inspired by Google’s Chain-of-Table: the LLM selects the relevant rows, then the relevant columns, and answers from that sub-table.' },
       ] }] },
       { title: 'Measuring it properly', body: [
-        'I moved evaluation from 76 hand-written questions to 1,000 question/answer pairs from four public benchmarks (FeTaQA, TAT-QA, TableBench, WikiTables), across four models: Gemma 2B, Gemma 3n (a mixture-of-experts model), Mistral 7B and GPT-4o-mini.',
-        'BERTScore alone could not separate the methods: every combination landed between 0.827 and 0.878. It measures semantic closeness, not whether the number is right. So I added an LLM-as-a-Judge that scores factual correctness from 0 to 100, and the spread opened up from 20.7 to 74.1.',
-      ], blocks: [{ type: 'duel',
-        reference: 'The United States finished behind 7 countries.',
-        generated: 'The United States placed behind 9 countries, including Finland, Netherlands, Norway, East Germany, Sweden, West Germany, Canada and Japan.',
-        scores: [{ metric: 'BERTScore', value: '0.74', verdict: 'looks close enough' }, { metric: 'LLM-as-a-Judge', value: '0', verdict: 'wrong answer' }],
-      }] },
-      { title: 'Results', body: [
-        'Chain-of-Tables wins on every model, and the smaller the model, the bigger the gain: Gemma 2B jumps from 20.7 to 65.1. Mistral 7B with Chain-of-Tables lands within 2.6 points of GPT-4o-mini, with an open model you can run on your own hardware.',
-      ], blocks: [{ type: 'bars' }] },
-      { title: 'Where it breaks', body: [
-        'Real reports are not tidy. Every company has its own template, with merged cells and multi-level headers, and those layouts cost the model points (GPT-4o-mini with Chain-of-Tables). Longer answers also drift: the more words, the lower the BERTScore.',
-      ], blocks: [{ type: 'stats', items: [
-        { value: '−5.1', label: 'with merged cells (73.9 → 68.7)' },
-        { value: '−12.0', label: 'with a hierarchical index (73.5 → 61.5)' },
-      ] }] },
-      { title: 'The fix: describe the table to the model', body: [
-        'I added a metadata block to the prompt (size, column names and types, merged cells, hierarchical index, missing values) plus an instruction to keep answers short. Every model except the smallest improved.',
-      ], blocks: [
-        { type: 'table', caption: 'Chain-of-Tables, LLM-as-a-Judge score',
-          head: ['Model', 'Without metadata', 'With metadata', 'Δ'],
-          rows: [['GPT-4o-mini', '74.12', '80.36', '+6.24'], ['Mistral 7B', '71.55', '73.16', '+1.62'], ['Gemma 3n (4B active)', '67.21', '71.70', '+4.49'], ['Gemma 2B', '65.14', '62.42', '−2.72']] },
-        { type: 'table', caption: 'Best set-up per question type, with metadata',
-          head: ['Question type', 'Best set-up', 'Score', 'Gain'],
-          rows: [['Fact checking', 'GPT-4o-mini · LLM-Table', '95.00', '+0.40'], ['Numerical reasoning', 'GPT-4o-mini · Chain-of-Tables', '86.55', '+10.85'], ['Simple lookup', 'GPT-4o-mini · Chain-of-Tables', '76.77', '+4.17'], ['Data analysis', 'Mistral 7B · Chain-of-Tables', '72.50', '+3.80']] },
+        'Similarity metrics like BERTScore say an answer “looks close” even when the number in it is wrong. So I built the evaluation on public table benchmarks with an LLM-as-a-Judge that checks factual correctness, across open and closed models.',
       ] },
-      { title: 'A 3,000-table labelling campaign', body: [
-        'Some metadata cannot be detected automatically: what a table is about, whether it is clean enough for SQL, which questions it can answer. So I set up a human labelling campaign to collect it, which also gives the other table projects at ALTEN a way to monitor their models.',
-      ], bullets: [
-        '3,000 tables and their question/answer pairs from FeTaQA, SciGen, TableBench, WikiTables and TAT-QA, stored on Azure Blob Storage.',
-        '120 Label Studio projects of 25 tables each, created with the Label Studio Python API on a dedicated VM, with a custom HTML/CSS annotation interface and an annotation guide.',
-        'Labels: a description, structure (language, merged cells, layout), quality (SQL-ready or not) and the question types each table supports.',
-        'Tracking pipelines that pull annotations in real time and report progress per project and per task.',
+      { title: 'What makes real tables hard', body: [
+        'Real reports are not tidy: every company has its own template, with merged cells and multi-level headers. Describing the table’s structure to the model in the prompt helps it cope with those layouts.',
       ] },
-      { title: 'The demonstrator', bullets: [
-        'Upload a table and ask questions in natural language, switching between GPT-4o-mini, Mistral and Gemma.',
-        'An analytics tab backed by a SQL database: sessions, questions, response time and cost per session.',
-        'Like / dislike feedback stored with every answer, as a base for learning from users later.',
-        'Tested on ALTEN (2021, 2023, 2024) and Carrefour (2021, 2022) reports: 96% satisfaction, and 100% of misleading questions (worded to bait a hallucination) caught.',
+      { title: 'Beyond the method', bullets: [
+        'A human labelling campaign on public benchmark tables, to collect the metadata that cannot be detected automatically.',
+        'A demonstrator: upload a table, ask questions in natural language, switch models, with usage analytics and user feedback.',
       ] },
       { title: 'What I took from it', body: [
-        'The method mattered more than the model size. A 7B open model with the right pipeline came within a few points of GPT-4o-mini, for much less cost and energy. That counts when the reports you analyse are about sustainability.',
-        'Next steps I documented: Text-to-SQL for larger tables (with a taxonomy of LLM SQL errors to evaluate it), and multimodal models that turn charts into tables so the same pipeline can read them.',
+        'The method mattered more than the model size: with the right pipeline, a small open model you can run on your own hardware gets close to a much larger closed one, for less cost and energy. That counts when the reports you analyse are about sustainability.',
       ] },
     ],
     gallery: [],

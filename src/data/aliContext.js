@@ -31,13 +31,12 @@ Sopra Steria Next is a leading European tech consulting firm. Ali works as an AI
 ### AI Research Intern — ALTEN R&D Innovation Lab (Apr – Sept 2025, Rennes)
 ALTEN is a major European engineering & technology consultancy with a dedicated R&D lab. Supervised by Pierpaolo Goffredo (PhD in NLP, LLM expert).
 End-of-studies internship on the Cobot-Greenwashing project: a conversational agent that answers questions about companies' CSR (sustainability) reports with sources. Ali owned the table tool, since key CSR figures live in tables where LLMs perform worse than on text.
-- Compared three methods: LLM-Table (whole table in the prompt, baseline), Multi-Experts (a few-shot classifier routes questions to 5 categories with specialised prompts, 90% routing accuracy on 250 questions) and Chain-of-Tables (the LLM selects relevant rows, then columns, and answers from the sub-table; inspired by Google's Chain-of-Table)
-- Built an evaluation on 1,000 QA pairs from FeTaQA, TAT-QA, TableBench and WikiTables, across Gemma 2B, Gemma 3n, Mistral 7B and GPT-4o-mini. Showed BERTScore could not separate methods (0.827–0.878) and added LLM-as-a-Judge scoring of factual correctness (20.7–74.1)
-- Chain-of-Tables won on every model: Gemma 2B went from 20.7 to 65.1; Mistral 7B came within 2.6 points of GPT-4o-mini (71.5 vs 74.1)
-- Found merged cells (−5.1 pts) and hierarchical indexes (−12 pts) hurt accuracy; injecting table metadata into the prompt raised GPT-4o-mini + Chain-of-Tables to 80.4 (+6.2), numerical reasoning to 86.55 (+10.85)
-- Set up a 3,000-table labelling campaign: 120 Label Studio projects of 25 tables, Azure Blob Storage, Label Studio Python API, custom annotation interface, annotation guide and tracking pipelines
-- Shipped a demonstrator: chat over any table with GPT-4o-mini / Mistral / Gemma, analytics dashboard (sessions, latency, cost) on a SQL database, like/dislike feedback. Tested on ALTEN and Carrefour reports: 96% satisfaction, 100% of misleading questions caught
-- Explored Text-to-SQL for larger tables, with a taxonomy of LLM SQL errors
+- Compared ways of handing a table to an LLM: the whole table in the prompt, routing questions by type to specialised prompts, and Chain-of-Tables (inspired by Google's Chain-of-Table: narrow down to the relevant rows and columns, then answer)
+- Built an evaluation on public table benchmarks with an LLM-as-a-Judge for factual correctness, because similarity metrics like BERTScore could not tell a right number from a wrong one
+- Studied what makes real report tables hard (merged cells, multi-level headers) and how describing the table's structure in the prompt helps
+- Set up a human labelling campaign and shipped a demonstrator (chat over a table, model switching, usage analytics, user feedback)
+- Main takeaway: the method mattered more than model size; a small open model with the right pipeline gets close to a much larger closed one
+- The detailed results are internal to ALTEN: if asked for exact scores or numbers, say Ali keeps them private and give the high-level picture instead
 
 ### Software Engineer / Data Analyst — French Health Insurance (Sept – Dec 2024, Remote)
 A mission-critical government project with high visibility:
