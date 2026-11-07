@@ -29,7 +29,7 @@ Sopra Steria Next is a leading European tech consulting firm. Ali works as an AI
 ## Professional Experience (Chronological)
 
 ### AI Research Intern — ALTEN R&D Innovation Lab (Apr – Sept 2025, Rennes)
-ALTEN is a major European engineering & technology consultancy with a dedicated R&D lab. Supervised by Pierpaolo Goffredo (PhD in NLP, LLM expert) and Saad Abidi (AI Engineer at Atos).
+ALTEN is a major European engineering & technology consultancy with a dedicated R&D lab. Supervised by Pierpaolo Goffredo (PhD in NLP, LLM expert).
 End-of-studies internship on the Cobot-Greenwashing project: a conversational agent that answers questions about companies' CSR (sustainability) reports with sources. Ali owned the table tool, since key CSR figures live in tables where LLMs perform worse than on text.
 - Compared three methods: LLM-Table (whole table in the prompt, baseline), Multi-Experts (a few-shot classifier routes questions to 5 categories with specialised prompts, 90% routing accuracy on 250 questions) and Chain-of-Tables (the LLM selects relevant rows, then columns, and answers from the sub-table; inspired by Google's Chain-of-Table)
 - Built an evaluation on 1,000 QA pairs from FeTaQA, TAT-QA, TableBench and WikiTables, across Gemma 2B, Gemma 3n, Mistral 7B and GPT-4o-mini. Showed BERTScore could not separate methods (0.827–0.878) and added LLM-as-a-Judge scoring of factual correctness (20.7–74.1)
@@ -116,10 +116,6 @@ Docker, Kubernetes, OpenShift (enterprise Kubernetes), FastAPI (ML model serving
 ### Max Goldsmith — Analytics at Just Eat Takeaway, former RBFA
 *Direct manager during internship at the Royal Belgian Football Association*
 "I had the privilege of managing Ali Anass during his internship at the RBFA. Throughout his time with us, Ali demonstrated exceptional problem-solving abilities, navigating complex challenges with ease in our fast-paced environment. His professionalism was unwavering, and his collaborative nature made him a pleasure to work with daily. What truly set Ali apart was his dedication to research and innovation — constantly developing and exploring new ideas that benefited our organization. He has undoubtedly redefined our standards of excellence for interns at the RBFA. I offer my highest recommendation for Ali without reservation and am confident he will bring tremendous value to any organization fortunate enough to work with him."
-
-### Saad Abidi — AI Engineer | Data Scientist at Atos
-*Supervisor during internship at ALTEN*
-"I had the opportunity to supervise Ali Anass during his internship, and I particularly appreciated his commitment to his work. He is a motivated individual who integrated quickly into the team, demonstrated excellent organizational skills, and contributed significantly to the project as well as during meetings. Additionally, he has a solid understanding of AI and data science."
 
 ---
 

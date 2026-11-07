@@ -165,7 +165,7 @@ export const projects = [
     heading: 'Teaching LLMs to read the tables in CSR reports',
     role: 'AI Research Intern (end-of-studies)',
     timeline: 'Apr to Sept 2025',
-    team: ['Pierpaolo Goffredo, PhD', 'Saad Abidi'],
+    team: ['Pierpaolo Goffredo, PhD'],
     skills: ['LLMs', 'Chain-of-Tables', 'LLM-as-a-Judge evals', 'Text-to-SQL'],
     media: { src: null, ratio: '4 / 3' },
     clickable: true,
