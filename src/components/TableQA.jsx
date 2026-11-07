@@ -50,7 +50,7 @@ export default function TableQA({ variant = 'case', active = true }) {
       ref={ref}
       className={`tableqa ${variant}`}
       role="img"
-      aria-label="Chain-of-Tables on a table from ALTEN's 2023 CSR report: the question about gross international energy consumption keeps one row and two columns, the LLM answers 8,310 MWh, then LLM-as-a-Judge scores show Chain-of-Tables beating the LLM-Table baseline on every model (gemma-2b 20.7 to 65.1, gpt-4o-mini 74.1, 80.4 with metadata)."
+      aria-label="Chain-of-Tables on a table from ALTEN's public 2023 CSR report: a question about Scope 1 emissions is routed to the numerical-reasoning expert, the table is narrowed to one row and two columns, the LLM computes the answer, and an LLM judge checks it."
     />
   );
 }

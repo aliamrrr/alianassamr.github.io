@@ -380,8 +380,8 @@ export const aboutPhotos = [
     { src: asset('/media/certifications.jpg'), ratio: 800 / 418, cursor: 'Claude Developer & Associate, AWS AI Practitioner', alt: 'Claude Certified Developer, Claude Certified Associate and AWS Certified AI Practitioner badges' },
   ] },
   { label: 'Stadiums', photos: [
-    { src: asset('/media/stadium-metropolitano.jpg'), ratio: 3 / 4, cursor: 'Metropolitano, Madrid', alt: 'Ali at the Metropolitano stadium' },
-    { src: asset('/media/stadium-parc-des-princes.jpg'), ratio: 3 / 4, cursor: 'Parc des Princes, Paris', alt: 'Ali at the Parc des Princes' },
-    { src: asset('/media/stadium-allianz-arena.jpg'), ratio: 3021 / 3427, cursor: 'Allianz Arena, Munich', alt: 'Ali at the Allianz Arena' },
+    { src: asset('/media/stadium-metropolitano.jpg'), ratio: 3 / 4, cursor: 'Metropolitano: Simeone ran more than the players', alt: 'Ali at the Metropolitano stadium' },
+    { src: asset('/media/stadium-parc-des-princes.jpg'), ratio: 3 / 4, cursor: 'My first UCL match: PSG 5-2 Chelsea. Every game since has been a downgrade', alt: 'Ali at the Parc des Princes' },
+    { src: asset('/media/stadium-allianz-arena.jpg'), ratio: 3021 / 3427, cursor: 'Allianz Arena: glows brighter than my GPU at 3am', alt: 'Ali at the Allianz Arena' },
   ] },
 ];

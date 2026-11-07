@@ -11,7 +11,6 @@ import { C, clamp, easeOut, easeInOut, roundRect } from './engine';
  */
 
 export const SERIES = { table: '#3D7FC2', experts: '#B8891A', chain: '#C1272D' };
-const META_RED = '#7E1A1F';
 const IDLE = '#dfe3e7';
 
 const Q = 'By how much did gross Scope 1 emissions fall between 2019 and 2024?';
@@ -29,7 +28,7 @@ const ROWS = [
 const KEEP = 1, DROP = 1; // keep "Gross scope 1"; drop the 2023 column
 const CALC = [['Δ = 669,327 − 940,582', -1], ['  = −271,255 tCO2eq', 1], ['  = −28.8% vs 2019', 1]];
 const ANSWER = 'Scope 1 fell by 271,255 tCO2eq (−28.8%).';
-const RESULTS = [['LLM-Table', 69.8, SERIES.table], ['Multi-Experts', 64.1, SERIES.experts], ['Chain-of-Tables', 75.7, SERIES.chain], ['CoT + metadata', 86.55, META_RED]];
+const CHECKS = ['grounded in the sub-table', 'calculation re-done', 'matches the reference'];
 
 /* timeline: the packet walks the graph; each step = [kind, from/node, to, ms] */
 const SEQ = [['e', 'q', 'router', 350], ['n', 'router', 950], ['e', 'router', 'numeric', 300], ['n', 'numeric', 250],
@@ -304,30 +303,30 @@ function drawArtifact(ctx, B, T, ga) {
   }
 }
 
-/* ── results of the methods on this question type ──────── */
+/* ── the judge's verdict on this answer (no study scores: those stay internal) ── */
 function drawResults(ctx, B, T, ga) {
   const vis = ph(T, [TS['n:judge'][0] - 200, TS['n:judge'][0] + 100]);
-  ctx.font = mono(9.5); ctx.fillStyle = C.ink2;
   ga(.35 + .65 * vis);
-  const narrow = B.w < 260;
-  ctx.fillText(narrow ? 'judge · numeric · gpt-4o-mini' : 'judge · numerical reasoning · gpt-4o-mini', B.x, B.y + 5);
-  const dk = ph(T, [T_META[1] - 100, T_META[1] + 200]);
-  if (dk > 0) { ga(dk); ctx.font = mono(10, 500); ctx.fillStyle = C.ink; if (narrow) ctx.fillText('+16.8 vs baseline', B.x, B.y + 18 + RESULTS.length * Math.min(18, (B.h - 18) / RESULTS.length) + 10); else { ctx.textAlign = 'right'; ctx.fillText('+16.8 vs baseline', B.x + B.w, B.y + 5); ctx.textAlign = 'left'; } }
+  ctx.font = mono(9.5); ctx.fillStyle = C.ink2;
+  ctx.fillText('judge · LLM-as-a-Judge', B.x, B.y + 5);
+  const vk = ph(T, [T_META[0], T_META[1]]);
+  if (vk > 0) {
+    ga(easeOut(vk));
+    ctx.font = mono(9, 500); const label = 'correct'; const pw = ctx.measureText(label).width + 14;
+    ctx.fillStyle = C.green; roundRect(ctx, B.x + B.w - pw, B.y - 3, pw, 16, 8); ctx.fill();
+    ctx.fillStyle = '#fff'; ctx.textAlign = 'right'; ctx.fillText(label, B.x + B.w - 7, B.y + 5.5); ctx.textAlign = 'left';
+  }
   ga(1);
-  const top = B.y + 18, step = Math.min(18, (B.h - 18) / RESULTS.length);
-  const lw = narrow ? 62 : 98, vw = narrow ? 32 : 38, bx = B.x + lw, bwid = B.w - lw - vw;
-  const SHORT = ['LLM-Table', 'Experts', 'CoT', 'CoT+meta'];
-  const X = (v) => bx + bwid * v / 100;
-  RESULTS.forEach(([name, v, col], i) => {
+  const top = B.y + 20, step = Math.min(18, (B.h - 20) / CHECKS.length);
+  CHECKS.forEach((txt, i) => {
     const yy = top + i * step + step / 2;
-    const win = i < 3 ? [TS['n:judge'][0] + i * 220, TS['n:judge'][0] + i * 220 + 700] : T_META;
-    const kk = easeOut(ph(T, win));
-    ctx.font = mono(9.5); ctx.fillStyle = C.ink2; ctx.fillText(narrow ? SHORT[i] : name, B.x, yy);
-    ctx.fillStyle = '#f1f3f5'; ctx.fillRect(bx, yy - 3.5, bwid, 7);
-    if (kk > 0) { ctx.fillStyle = col; roundRect(ctx, bx, yy - 3.5, Math.max(4, (X(v) - bx) * kk), 7, 3); ctx.fill(); ctx.fillRect(bx, yy - 3.5, Math.min(3, (X(v) - bx) * kk), 7); }
-    if (kk > .3) { ga(clamp((kk - .3) / .7, 0, 1)); ctx.font = mono(9.5, i === 3 ? 500 : 400); ctx.fillStyle = C.ink; ctx.textAlign = 'right'; ctx.fillText((v * kk).toFixed(1), B.x + B.w, yy); ctx.textAlign = 'left'; ga(1); }
+    const kk = easeOut(ph(T, [TS['n:judge'][0] + i * 300, TS['n:judge'][0] + i * 300 + 350]));
+    ctx.strokeStyle = kk > 0 ? C.green : '#d6dbe0'; ctx.lineWidth = 1.2;
+    ctx.beginPath(); ctx.arc(B.x + 5, yy, 5, 0, Math.PI * 2); ctx.stroke();
+    if (kk > 0) {
+      ga(kk); ctx.strokeStyle = C.green; ctx.lineWidth = 1.5;
+      ctx.beginPath(); ctx.moveTo(B.x + 2.6, yy + .2); ctx.lineTo(B.x + 4.4, yy + 2); ctx.lineTo(B.x + 7.6, yy - 2.2); ctx.stroke(); ga(1);
+    }
+    ctx.font = sans(10.5); ctx.fillStyle = kk > 0 ? C.ink : C.ink3; ctx.fillText(txt, B.x + 16, yy);
   });
-  // baseline marker
-  const bk = ph(T, [TS['n:judge'][0] + 700, TS['n:judge'][0] + 1000]);
-  if (bk > 0) { ga(bk * .8); ctx.strokeStyle = C.ink3; ctx.setLineDash([2, 3]); ctx.lineWidth = 1; ctx.beginPath(); ctx.moveTo(X(69.8) + .5, top - 2); ctx.lineTo(X(69.8) + .5, top + RESULTS.length * step); ctx.stroke(); ctx.setLineDash([]); ga(1); }
 }
