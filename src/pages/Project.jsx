@@ -3,6 +3,7 @@ import { TeaPour } from '../components/Pixel';
 import LiveMatch from '../components/LiveMatch';
 import CodmaiDemo from '../components/CodmaiDemo';
 import TableQA from '../components/TableQA';
+import Sma3niDemo from '../components/Sma3niDemo';
 import CaseBlock from '../components/CaseBlocks';
 import { getProject, projects } from '../data/content';
 import { href } from '../hooks/useRoute';
@@ -37,9 +38,9 @@ export default function Project({ slug }) {
         <Meta label="Skills" value={p.skills?.join(', ')} />
       </div>
 
-      {p.live === 'tables' ? (
+      {p.live === 'tables' || p.live === 'sma3ni' ? (
         <figure className="live-block hero">
-          <TableQA variant="case" />
+          {p.live === 'tables' ? <TableQA variant="case" /> : <Sma3niDemo variant="case" />}
           {p.liveCaption && <figcaption className="figcap">{p.liveCaption}</figcaption>}
         </figure>
       ) : (
@@ -56,7 +57,7 @@ export default function Project({ slug }) {
         </div>
       )}
 
-      {p.live && p.live !== 'tables' && (
+      {p.live && p.live !== 'tables' && p.live !== 'sma3ni' && (
         <figure className="live-block">
           {p.live === 'detect' ? <LiveMatch variant="case" /> : <CodmaiDemo />}
           {p.liveCaption && <figcaption className="figcap">{p.liveCaption}</figcaption>}

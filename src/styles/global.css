@@ -579,3 +579,12 @@ a.company:hover { color: var(--primary); }
 
 /* "Currently" stands out: Moroccan green, same as the live dot */
 .meta-grid .label-now { color: var(--secondary); font-weight: 500; }
+
+/* Sma3ni: demo canvas + diagrams in the case study */
+.live-block .tableqa.sma3ni.case { aspect-ratio: 1 / 1; height: auto; }
+@media (min-width: 768px) { .live-block .tableqa.sma3ni.case { aspect-ratio: 16 / 10; height: auto; } }
+.case-figure { margin: 24px 0 0; }
+.case-figure a { display: block; }
+.case-figure img { display: block; width: 100%; height: auto; border: 1px solid var(--border); border-radius: 6px; background: #fff; }
+.projects .wide { grid-column: 1 / -1; }
+@media (min-width: 768px) { .case-figure { width: calc(100% * 8 / 6); margin-left: calc(100% / -6); } }

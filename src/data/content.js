@@ -297,13 +297,75 @@ export const projects = [
     ],
     gallery: [],
   },
+  {
+    slug: 'sma3ni',
+    title: 'Sma3ni',
+    tag: 'Voice AI · event-driven 2026',
+    heading: 'A voice desk for public services, in Darija',
+    role: 'Solo side project',
+    timeline: '2026',
+    team: [],
+    skills: ['Speech-to-text (Voxtral)', 'Event-driven architecture', 'Docker & AWS', 'FastAPI, PostgreSQL, NATS'],
+    media: { src: null, ratio: '2 / 1' },
+    clickable: true,
+    cardLive: 'sma3ni',
+    live: 'sma3ni',
+    liveCaption: 'A 7-second voice note about a power cut, from upload to the right department. Every box is a real container of the project; the dashed arrows are events pulled from NATS JetStream.',
+    link: { href: 'https://github.com/aliamrrr/sma3ni', label: 'github.com/aliamrrr/sma3ni' },
+    summary:
+      'Sma3ni ("listen to me" in Moroccan Darija) started as a way to test the two open models released for Morocco by Morocco-MTNRA-Labs: Voxtral-Mini-4B-Realtime-Arabic for speech-to-text (Darija, Hassaniya, MSA, with French code-switching) and LIDstral-Arabic for dialect identification. I built it as a real product rather than a notebook: a citizen sends a voice note in Darija, the administration receives a written, classified request routed to the right department, and the citizen gets a tracking code.',
+    sections: [
+      { title: 'Why voice', body: [
+        'Most Moroccans communicate by voice and in Darija: voice notes, phone calls. Administrative portals expect written Modern Standard Arabic or French, and expect the citizen to know which department to ask. Sma3ni removes both steps.',
+      ] },
+      { title: 'The architecture', body: [
+        'Ten containers on one GPU server with Docker Compose, plus Amazon S3 for the audio. Only Caddy is reachable from the internet; PostgreSQL, NATS and the workers live on an internal network with no route out.',
+      ], blocks: [{ type: 'figure', src: asset('/media/sma3ni-architecture.png'), width: 3840, height: 2480,
+        alt: 'Sma3ni solution architecture on AWS: four channels call Caddy over HTTPS, then the FastAPI api, PostgreSQL, the relay, NATS JetStream, the GPU asr-worker running Voxtral and the nlp-worker running LIDstral, with Amazon S3 for audio, an IAM instance role and a models volume filled once from Hugging Face.',
+        caption: 'Solution architecture on AWS: EC2 g6.2xlarge (NVIDIA L4), S3 with SSE-KMS and a 7-day lifecycle, an IAM instance role and no static keys. Click to open full size.' }] },
+      { title: 'Event-driven, on purpose', body: [
+        'A 4B speech model takes seconds on a GPU and minutes on a CPU, so the API never waits for a model. It stores the audio, answers 202 with a tracking code in milliseconds, and the pipeline runs in the background.',
+      ], bullets: [
+        'Transactional outbox: the request and its event are written to PostgreSQL in the same transaction, so a state change can never lose its event, or the reverse.',
+        'A relay wakes up on LISTEN/NOTIFY and publishes the outbox to NATS JetStream (durable stream on disk, explicit ack).',
+        'Exactly-once effects on at-least-once delivery: Nats-Msg-Id dedupes on the broker side, and each worker records the events it has applied in the same transaction as its own writes.',
+        'Retries with backoff (5 s, 30 s, 2 min, 10 min). A permanent error or the last attempt hands the request to a human triage desk: a request is never lost, only escalated.',
+        'Adding a consumer (notifications, webhooks) is a subclass and two attributes, and it can replay the last 7 days of events.',
+      ], blocks: [{ type: 'figure', src: asset('/media/sma3ni-event-driven.png'), width: 3840, height: 2160,
+        alt: 'Sma3ni event-driven view: citizen, WhatsApp and agents reach caddy and the api; the api writes to postgres; the relay publishes to NATS JetStream, which carries request.received, request.transcribed, request.routed and request.status_changed to the nlp-worker, a planned notifier and the asr-worker; a janitor cleans up.',
+        caption: 'The event-driven view: each worker pulls only the events it needs.' }] },
+      { title: 'The models', bullets: [
+        'asr-worker: Voxtral-Mini-4B-Realtime-Arabic in bf16 on CUDA. The voice note is decoded by ffmpeg to 16 kHz mono and transcribed in one pass.',
+        'nlp-worker: LIDstral-Arabic labels the dialect (Darija, Hassaniya, MSA…), then deterministic rules pick the department and the priority.',
+        'Weights are downloaded once into a read-only volume and the workers run offline, so a Hugging Face outage never blocks a restart. The worker refuses to start on CPU when a GPU is expected, instead of silently running 10 to 50 times slower.',
+      ] },
+      { title: 'Routing a human can read', body: [
+        'No generative model decides where a request goes. The rules are rows in PostgreSQL, with keywords in Darija, MSA and French, that staff can read and edit while the system runs.',
+      ], bullets: [
+        'Arabic normalisation handles letter variants and strips proclitics (و, ب, ف, ل, ال) as long as the stem keeps 3 letters, so والفاتورة matches الفاتورة but الما (water) never becomes ما (not).',
+        'Urgent categories (corruption, danger) always escalate to priority 1.',
+        'Low dialect confidence, Amazigh (not covered by the speech model), an empty transcript or a tie between two categories all go to human review instead of a guess.',
+      ] },
+      { title: 'Built like production', bullets: [
+        'Containers run as non-root with a read-only filesystem, no Linux capabilities and resource limits. Caddy handles TLS, HSTS and a strict CSP.',
+        'Scoped API keys stored as hashes, agents only see their own service, contacts encrypted at application level, every read of personal data audited, audio deleted after 7 days.',
+        'Terraform for the AWS side (S3, IAM, VPC endpoint, GPU instance), SSM instead of SSH.',
+        'A dev overlay swaps both models for deterministic fakes, so the whole pipeline runs on a laptop; a smoke test checks it end to end. CI runs ruff, pytest, gitleaks, an image build and terraform validate.',
+      ] },
+      { title: 'Where it stands', body: [
+        'The pipeline runs end to end with the fake engines. The Voxtral call follows the model card but still has to be validated on the real weights during the first GPU deployment, along with the real-time factor. This is where I sharpened my skills on containers, event-driven design and cloud deployment.',
+      ] },
+    ],
+    gallery: [],
+  },
 ];
 
 export const workColumns = [
   ['rbfa', 'codmai'],
   ['catchball', 'alten'],
 ];
-export const workOrder = ['rbfa', 'catchball', 'codmai', 'alten'];
+export const workWide = ['sma3ni']; // full-width row under the two columns
+export const workOrder = ['rbfa', 'catchball', 'codmai', 'alten', 'sma3ni'];
 export const getProject = (slug) => projects.find((p) => p.slug === slug);
 
 /* ── Fun: side projects, hackathons, football ─────────────── */
@@ -314,6 +376,8 @@ export const funItems = [
     categories: ['hackathon', 'football'], src: asset('/media/taible.jpg'), ratio: 1069 / 573, href: '#/work/taible', cursor: 'case-study', ctx: 'ball' },
   { title: 'This portfolio + AliLLM', description: 'This site, and a chatbot that answers questions about me', tag: 'Side project · React, canvas, Mistral',
     categories: ['side project', 'agents'], src: asset('/media/portfolio-alillm.jpg'), ratio: 1440 / 900, cursorText: 'You are looking at it :)' },
+  { title: 'Sma3ni', description: 'Voice notes in Darija, routed to the right public service', tag: 'Side project · Voxtral, LIDstral, event-driven',
+    categories: ['side project'], src: asset('/media/sma3ni-event-driven.png'), ratio: 3840 / 2160, href: '#/work/sma3ni', cursor: 'case-study' },
   { title: 'Next Radio', description: 'A radio channel run entirely by AI agents', tag: 'Paris AI Hackathon, with Adnane El Yazid',
     categories: ['hackathon', 'agents'], src: asset('/media/next-radio-app.jpg'), ratio: 480 / 872 },
   { title: 'Mbappé sentiment', description: 'How France feels about Mbappé, match by match', tag: 'Sentiment analysis · World Cup 2026',

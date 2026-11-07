@@ -3,6 +3,7 @@ import AssetSlot from './AssetSlot';
 import LiveMatch from './LiveMatch';
 import CodmaiDemo from './CodmaiDemo';
 import TableQA from './TableQA';
+import Sma3niDemo from './Sma3niDemo';
 import { href } from '../hooks/useRoute';
 
 /* `active` (optional) lets the Work page play a card without the mouse; otherwise hover drives it. */
@@ -17,9 +18,9 @@ export default function ProjectCard({ project, active, onHover }) {
   const inner = (
     <div className={`card${on ? " is-on" : ""}`} onMouseEnter={enter} onMouseLeave={leave}>
       <div className="card-media">
-        {cardLive === 'tables' ? (
+        {cardLive === 'tables' || cardLive === 'sma3ni' ? (
           <div className="asset inset-border tableqa-frame" style={{ aspectRatio: String(media.ratio) }}>
-            <TableQA variant="card" active={on} />
+            {cardLive === 'tables' ? <TableQA variant="card" active={on} /> : <Sma3niDemo variant="card" active={on} />}
           </div>
         ) : (
           <AssetSlot src={media.src} type={media.type} ratio={media.ratio} hint={media.hint} pos={media.pos} poster={media.poster} alt={title} />

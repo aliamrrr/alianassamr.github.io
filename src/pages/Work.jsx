@@ -1,6 +1,6 @@
 import { useEffect, useRef, useState } from 'react';
 import ProjectCard from '../components/ProjectCard';
-import { getProject, workColumns, workOrder } from '../data/content';
+import { getProject, workColumns, workOrder, workWide } from '../data/content';
 import { href } from '../hooks/useRoute';
 import { useFocusedCard } from '../hooks/useFocusedCard';
 
@@ -76,11 +76,14 @@ export default function Work({ chatOpen }) {
         {narrow ? (
           workOrder.map(card)
         ) : (
-          workColumns.map((col, i) => (
-            <div className="col" key={i}>
-              {col.map(card)}
-            </div>
-          ))
+          <>
+            {workColumns.map((col, i) => (
+              <div className="col" key={i}>
+                {col.map(card)}
+              </div>
+            ))}
+            <div className="wide">{workWide.map(card)}</div>
+          </>
         )}
       </div>
     </div>

@@ -1,13 +1,14 @@
 import { useState } from 'react';
 import { SERIES } from '../motion/tableqa';
 
-/* Rich blocks for case studies: { type: 'methods' | 'duel' | 'bars' | 'stats' | 'table' }. */
+/* Rich blocks for case studies: { type: 'methods' | 'duel' | 'bars' | 'stats' | 'table' | 'figure' }. */
 export default function CaseBlock({ block }) {
   if (block.type === 'methods') return <Methods items={block.items} />;
   if (block.type === 'duel') return <Duel {...block} />;
   if (block.type === 'bars') return <JudgeChart />;
   if (block.type === 'stats') return <Stats items={block.items} />;
   if (block.type === 'table') return <DataTable {...block} />;
+  if (block.type === 'figure') return <Figure {...block} />;
   return null;
 }
 
@@ -186,5 +187,17 @@ function DataTable({ caption, head, rows }) {
         </tbody>
       </table>
     </div>
+  );
+}
+
+/* ── Figure: a diagram, opens full size in a new tab ── */
+function Figure({ src, alt, caption, width, height }) {
+  return (
+    <figure className="case-figure">
+      <a href={src} target="_blank" rel="noopener noreferrer" data-cursor-text="Open full size">
+        <img src={src} alt={alt} width={width} height={height} loading="lazy" decoding="async" />
+      </a>
+      {caption && <figcaption className="figcap">{caption}</figcaption>}
+    </figure>
   );
 }
