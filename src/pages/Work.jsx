@@ -2,14 +2,18 @@ import { useEffect, useRef, useState } from 'react';
 import ProjectCard from '../components/ProjectCard';
 import { getProject, workColumns, workOrder } from '../data/content';
 import { href } from '../hooks/useRoute';
-import { useFocusedCard } from '../hooks/useFocusedCard';
+import { useVisibleCards } from '../hooks/useFocusedCard';
 
 const ext = { target: '_blank', rel: 'noopener noreferrer' };
 
 // Two staggered columns as soon as there is room; a single column only when the usable width
 // (viewport minus the open chat dock) drops under 1024px.
+// `oneLine`: room to keep "Ali Anass is an AI Engineer" on a single line (~850px at 4rem).
 function useNarrow(chatOpen) {
-  const calc = () => (chatOpen ? window.innerWidth - 400 : window.innerWidth) < 1024;
+  const calc = () => {
+    const usable = chatOpen ? window.innerWidth - 400 : window.innerWidth;
+    return { narrow: usable < 1024, oneLine: usable >= (chatOpen ? 1100 : 1024) };
+  };
   const [narrow, setNarrow] = useState(calc);
   useEffect(() => {
     const on = () => setNarrow(calc());
@@ -21,17 +25,17 @@ function useNarrow(chatOpen) {
 }
 
 export default function Work({ chatOpen }) {
-  const narrow = useNarrow(chatOpen);
+  const { narrow, oneLine } = useNarrow(chatOpen);
   const gridRef = useRef(null);
-  // the card the visitor is on plays by itself after 0.2s; the mouse takes over when it hovers one
-  const focused = useFocusedCard(gridRef);
+  // every card on screen plays by itself (as if hovered); the one under the mouse always plays
+  const visible = useVisibleCards(gridRef);
   const [hovered, setHovered] = useState(null);
-  const card = (s) => <ProjectCard key={s} project={getProject(s)} active={hovered ? hovered === s : focused === s} onHover={setHovered} />;
+  const card = (s) => <ProjectCard key={s} project={getProject(s)} active={hovered === s || visible.has(s)} onHover={setHovered} />;
 
   return (
     <div>
       <h1 className="hero-headline">
-        <span className="name-tag">Ali Anass</span> is an AI engineer {!narrow && <br />}who loves building AI use cases.
+        <span className={oneLine ? 'hero-line one' : 'hero-line'}><span className="name-tag">Ali Anass</span> is an AI Engineer</span> {!narrow && <br />}who loves building AI use cases.
       </h1>
       <p className="hero-note">
         <svg className="hero-link" width="22" height="18" viewBox="0 0 22 18" aria-hidden>

@@ -588,3 +588,10 @@ a.company:hover { color: var(--primary); }
 .case-figure img { display: block; width: 100%; height: auto; border: 1px solid var(--border); border-radius: 6px; background: #fff; }
 .projects .wide { grid-column: 1 / -1; }
 @media (min-width: 768px) { .case-figure { width: calc(100% * 8 / 6); margin-left: calc(100% / -6); } }
+
+/* Work masonry: on desktop the two columns also take the two free grid columns on the right (8 → 10 of 12),
+   so the cards are ~25% wider and taller while staying aligned with the headline on the left. */
+@media (min-width: 1200px) { .projects.two { width: calc(125% + var(--grid-gutter) / 4); } }
+/* Work hero: "Ali Anass is an AI Engineer" stays on one line once there is room for it */
+.hero-line.one { white-space: nowrap; }
+@media (min-width: 1200px) { .hero-headline { width: calc(125% + var(--grid-gutter) / 4); } }
