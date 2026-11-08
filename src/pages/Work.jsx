@@ -1,15 +1,15 @@
 import { useEffect, useRef, useState } from 'react';
 import ProjectCard from '../components/ProjectCard';
-import { getProject, workColumns, workOrder, workWide } from '../data/content';
+import { getProject, workColumns, workOrder } from '../data/content';
 import { href } from '../hooks/useRoute';
 import { useFocusedCard } from '../hooks/useFocusedCard';
 
 const ext = { target: '_blank', rel: 'noopener noreferrer' };
 
-// Mirrors the reference: collapse to a single column when the usable width
-// (viewport minus the open chat dock) drops under 1280px.
+// Two staggered columns as soon as there is room; a single column only when the usable width
+// (viewport minus the open chat dock) drops under 1024px.
 function useNarrow(chatOpen) {
-  const calc = () => (chatOpen ? window.innerWidth - 400 : window.innerWidth) < 1280 || window.innerWidth < 1200;
+  const calc = () => (chatOpen ? window.innerWidth - 400 : window.innerWidth) < 1024;
   const [narrow, setNarrow] = useState(calc);
   useEffect(() => {
     const on = () => setNarrow(calc());
@@ -82,7 +82,6 @@ export default function Work({ chatOpen }) {
                 {col.map(card)}
               </div>
             ))}
-            <div className="wide">{workWide.map(card)}</div>
           </>
         )}
       </div>

@@ -235,7 +235,7 @@ export const projects = [
     team: [],
     skills: ['Physical AI', 'Reinforcement learning (PPO)', 'World models (TD-MPC2)', 'Computer vision'],
     media: { src: asset('/media/catchball-film.mp4'), type: 'video', ratio: '16 / 9', poster: asset('/media/catchball-poster.jpg'), controls: true },
-    cardMedia: { src: asset('/media/catchball-loop.mp4'), type: 'video', ratio: '16 / 9', poster: asset('/media/catchball-poster.jpg') },
+    cardMedia: { src: asset('/media/catchball-loop.mp4'), type: 'video', ratio: '5 / 4', poster: asset('/media/catchball-poster.jpg') },
     clickable: true,
     summary:
       'My first reinforcement learning × robotics side project: a simulated humanoid learning to catch a ball, first with perfect knowledge of the ball, then with nothing but its own camera, and finally with a world model to plan. The film above covers the whole thing.',
@@ -271,7 +271,7 @@ export const projects = [
     timeline: '2026',
     team: [],
     skills: ['Speech-to-text (Voxtral)', 'Event-driven architecture', 'Docker & AWS', 'FastAPI, PostgreSQL, NATS'],
-    media: { src: null, ratio: '2 / 1' },
+    media: { src: null, ratio: '4 / 5' }, // portrait card in the masonry; the case study uses its own live block
     clickable: true,
     cardLive: 'sma3ni',
     live: 'sma3ni',
@@ -325,11 +325,12 @@ export const projects = [
   },
 ];
 
+// Masonry: two independent columns with different card heights, so the rows never line up.
+// Left ≈ 0.56 + 0.76 + 0.75, right ≈ 0.8 + 1.25 (height / width): both columns end close together.
 export const workColumns = [
-  ['rbfa', 'codmai'],
-  ['catchball', 'alten'],
+  ['rbfa', 'codmai', 'alten'],
+  ['catchball', 'sma3ni'],
 ];
-export const workWide = ['sma3ni']; // full-width row under the two columns
 export const workOrder = ['rbfa', 'catchball', 'codmai', 'alten', 'sma3ni'];
 export const getProject = (slug) => projects.find((p) => p.slug === slug);
 
